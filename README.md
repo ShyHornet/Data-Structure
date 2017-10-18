@@ -114,3 +114,16 @@ queue[rear] = v;
 
 }
 ```
+[BFS可视化过程](http://www.cs.usfca.edu/~galles/visualization/BFS.html)
+##最小（代价）生成树(minimum cost spanning treeh)
+
+###1.普里姆算法(Prim)
+执行过程:
+从V0开始执行
+1.将边{e | e = (V0,Vi)(i=0...n-1)}当做侯选边.
+
+c语言实现:
+```c
+
+```
+[Prim可视化过程](http://www.cs.usfca.edu/~galles/visualization/Prim.html)
