@@ -61,7 +61,7 @@ void preorder(Btnode *p)
 ```
 [DFS可视化过程](http://www.cs.usfca.edu/~galles/visualization/DFS.html)
 
-###2.BFS(广度优先搜索)
+### 2.BFS(广度优先搜索)
 类似于树的层次遍历
 
 算法执行流程(伪代码):
@@ -115,9 +115,9 @@ queue[rear] = v;
 }
 ```
 [BFS可视化过程](http://www.cs.usfca.edu/~galles/visualization/BFS.html)
-##最小（代价）生成树(minimum cost spanning treeh)
+## 最小（代价）生成树(minimum cost spanning treeh)
 
-###1.普里姆算法(Prim)
+### 1.普里姆算法(Prim)
 执行过程:
 从V0开始执行
 1.将边{e | e = (V0,Vi)(i=0...n-1)}当做侯选边.
