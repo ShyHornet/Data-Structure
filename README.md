@@ -118,12 +118,68 @@ queue[rear] = v;
 ## 最小（代价）生成树(minimum cost spanning treeh)
 
 ### 1.普里姆算法(Prim)
+>默认使用邻接矩阵作为存储结构
 执行过程:
-从V0开始执行
-1.将边{e | e = (V0,Vi)(i=0...n-1)}当做侯选边.
-
+```python
+def Prim(G,V0):
+for all u in V: #初始化lowcost为各个边的权值
+	lowcost[u]<-cost[u]
+lowcost<-{e | e = (V0,Vi)(i=0...n-1)}
+min<-INF
+for all u in V:
+	for (u,v) in E: # 选出侯选边中最小权值的边，并入最小代价树
+		if u is not set and lowcost[u]<min:
+			min<-lowcost[u]
+			addToSpanningTreeh(u)  #并入最小代价树方式不固定
+	for (v,z) in E: #更新与v相连的侯选边的权值
+		if z is not set and cost[z]<lowcost[z]: #如果(v,z)的权值比lowcost[z]小，则用(v,z)的权值更新侯选边
+			lowcost[z]<-cost[z]
+```
 c语言实现:
 ```c
+void Prim(MGraph G,int v0,int tree[MAX_SIZE])
+{
+	int lowcost[MAX_SIZE],vset[MAX_SIZE],v;
+	int i,j,k,min;
+	v = v0;
+	for (i = 0;i<G.n;i++)//初始化lowcost数组为各个边的权值
+	{
+		lowcost[i] = G.edges[v0][i];
+		vset[i] = 0;
+	
+	}
+	vset[v0] = 1;//将v0并入最小代价树
+	tree[v0] = 0;
+	
+	for (i = 0;i<G.n-1;i++)
+	{
+		min = INF;//INF为比所有边权值都要大的正常数
+		for (j = 0;j<G.n;j++)
+		{
+			if(vset[j]==0&&lowcost[j]<min)
+			{
+				min = lowcost[j];
+				k = j;//保存权值最小的边
+			}
+		}
+		vset[k] = 1;//将权值最小的边纳入最小代价树
+		v = k;
+		tree[v] = min;
+		
+			for (j = 0;j<G.n;j++)//从顶点v出发，更新其他侯选边的权值
+		{
+			if(vset[j]==0&&G.edges[v][j]<lowcost[j])
+			{
+				lowcost[j] = G.edges[v][j];
+			}
+		}
+		
+	}
+
+}
 
 ```
+时间复杂度:
+基本操作:min = lowcost[]处于二重循环中.
+O(n^2)
 [Prim可视化过程](http://www.cs.usfca.edu/~galles/visualization/Prim.html)
