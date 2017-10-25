@@ -180,24 +180,60 @@ void Prim(MGraph G,int v0,int tree[MAX_SIZE])
 
 ```
 时间复杂度:
-<p>基本操作:min = lowcost[]处于二重循环中.</p>
-<p>O(n^2)</p>
+基本操作:min = lowcost[]处于二重循环中,所以时间复杂度为O(n^2)
 [Prim可视化过程](http://www.cs.usfca.edu/~galles/visualization/Prim.html)
+
 ### 2.克鲁斯卡尔算法(Kruskal)
 执行过程:
+
 ```python
 def kruskal(G):
- for all u in V:
-   MakeSet(v)   #建立并查集
+	for all u in V:
+   		MakeSet(v)   #建立并查集
  X<-empty set #初始化最小代价树
  sort the edges E by weight
  for all {u,v} in E in non-decreasing weight order:
-   if Find(u)!=Find(v):#检查两个顶点是否有同一个根,确保两者属于不同的连通分量(Connected Component)
-     add{u,v} to X
- 
+  	if FindRoot(u)!=FindRoot(v):#检查两个顶点是否有同一个根,确保两者属于不同的连通分量(Connected Component)
+    	add{u,v} to X
+ 		Union(u,v)
 ```
 c语言实现:
-```c
 
+```c
+typedef struct
+{
+	int u,v;//u,v为一条边所连的两个顶点
+	int w;//边上的权值
+}Road;
+Road road[MAX_SIZE];
+int disjoint[MAX_SIZE];//定义并查集
+int FindRoot(int vertex){//找到顶点的根节点
+	while(vertex!=v[vertex]){
+		vertex= v[vertex];
+	}
+	return a;
+}
+void Kruskal(MGraph G,int e,int &sum,Road road[] )
+{
+	int i,N,E,u,u,v
+	N = G.n;
+	E = G.e;
+	for(i = 0;i<N;i++){disjoint[i] = i;}//初始化并查集
+	sort(road,E);//按非递减顺序排序各边
+	for(i = 0;i<E;i++)
+	{
+		u  = FindRoot(road[i].u);
+		v = FindRoot(road[i].v);
+		if(u!=v)
+		{
+			v[u] = v;//将两个路径合并
+			sum+=road[i].w;
+		}
+	}
+}
 ```
+
 时间复杂度:
+O(|E|log|V|)
+
+(Kruskal算法可视化)[http://www.cs.usfca.edu/%7Egalles/visualization/Kruskal.html]
