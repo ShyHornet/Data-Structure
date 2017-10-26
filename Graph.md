@@ -236,4 +236,4 @@ void Kruskal(MGraph G,int e,int &sum,Road road[] )
 时间复杂度:
 O(|E|log|V|)
 
-(Kruskal算法可视化)[http://www.cs.usfca.edu/%7Egalles/visualization/Kruskal.html]
+[Kruskal算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Kruskal.html)
