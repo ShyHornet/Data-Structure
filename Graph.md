@@ -237,3 +237,60 @@ void Kruskal(MGraph G,int e,int &sum,Road road[] )
 O(|E|log|V|)
 
 [Kruskal算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Kruskal.html)
+## 最短路径算法
+### 1.迪杰斯特拉算法
+执行过程:
+```python
+#需要三个辅助数组:dist[],path[]和set[]
+Dijkstra(G,S)#S为初始顶点
+#初始化dist[],path[]和set[]
+for all {S,V} in E:
+	set[v] = 0
+	dist[V]<-G[S][V]
+	if G[S][V] < INF:
+		path[V] = V
+	else:
+		path[v] = -1
+for all V in G:
+	U<-ExtractionMin(G)#从剩余顶点中选出一个顶点，使得{S,U}距离最短
+	set[U] = 1#标记选出的顶点已经处理过
+for all {U,M} in E:
+	if M not in set and dist[M]+G[U][M]<dist[U]:
+		dist[U]<-dist[M]+G[U][M]
+		path[U]<-M#将顶点M并入最短路径中
+#此时:dist[]中存放了从S到其余各顶点的最短距离;path[]中存放了从S到其余各顶点的最短路径(最短路径上经过的顶点编号)
+```
+C语言实现:
+```c
+void Dijkstra(Mgraph G,int S,int dist[],int path[]){
+	int set[MAX_SIZE];
+	int V,U,M,i = 0;
+	for(V = 0;V < G.n;V++){
+		set[V] = 0;
+		dist[V] = G.edges[S][V];
+		path[V] = (G.edges[S][V]<INF) ? V : -1;
+	}
+	for(V = 0;V<G.n;V++){
+		min = INF;
+		for(i=0;i<G.n;i++){
+			
+			if(set[i]==0&&dist[i]<min){
+				U = i;
+				min = dist[i];
+			}
+			
+		}
+		set[U] = 1;
+		for (M=0;M<G.n;M++){
+			if(set[M]==0&&dist[M]+G.edges[U][M]<dist[U]){
+				dist[U]<-dist[M]+G.edges[U][M];
+				path[U] = M;
+			}
+		}
+	}
+}
+```
+时间复杂度:
+O(n^2)
+
+[Dijkstra算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Dijkstra.html)
