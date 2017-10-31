@@ -243,21 +243,21 @@ O(|E|log|V|)
 ```python
 #需要三个辅助数组:dist[],path[]和set[]
 Dijkstra(G,S)#S为初始顶点
-#初始化dist[],path[]和set[]
-for all {S,V} in E:
-	set[v] = 0
-	dist[V]<-G[S][V]
-	if G[S][V] < INF:
-		path[V] = V
-	else:
-		path[v] = -1
-for all V in G:
-	U<-ExtractionMin(G)#从剩余顶点中选出一个顶点，使得{S,U}距离最短
-	set[U] = 1#标记选出的顶点已经处理过
-for all {U,M} in E:
-	if M not in set and dist[M]+G[U][M]<dist[U]:
-		dist[U]<-dist[M]+G[U][M]
-		path[U]<-M#将顶点M并入最短路径中
+	#初始化dist[],path[]和set[]
+	for all {S,V} in E:
+		set[v] = 0
+		dist[V]<-G[S][V]
+		if G[S][V] < INF:
+			path[V] = V
+		else:
+			path[v] = -1
+	for all V in G:
+		U<-ExtractionMin(G)#从剩余顶点中选出一个顶点，使得{S,U}距离最短
+		set[U] = 1#标记选出的顶点已经处理过
+	for all {U,M} in E:
+		if M not in set and dist[M]+G[U][M]<dist[U]:
+			dist[U]<-dist[M]+G[U][M]
+			path[U]<-M#将顶点M并入最短路径中
 #此时:dist[]中存放了从S到其余各顶点的最短距离;path[]中存放了从S到其余各顶点的最短路径(最短路径上经过的顶点编号)
 ```
 C语言实现:
@@ -294,3 +294,43 @@ void Dijkstra(Mgraph G,int S,int dist[],int path[]){
 O(n^2)
 
 [Dijkstra算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Dijkstra.html)
+### 1.迪杰斯特拉算法
+执行过程:
+```python
+Floyd(G):
+	for {U,V} in E:
+		A[U][V] = G[U][V]
+		Path[U][V] = -1
+	for K in V:	
+		for {i,K} in E:
+			for {K,j} in E:
+				if A[i][j]>A[i][K]+A[K][j]:
+					A[i][j] = A[i][K]+A[K][j]
+					Path[i][j]=K
+```
+c语言实现:
+```c
+void Floyd(MGraph G,int Path[][MAX_SIZE]){
+	int i,j,k;
+	int A[MAX_SIZE][MAX_SIZE];
+	for(i = 0;i < G.n;i++){
+		for(j = 0;j < G.n;j++){
+			A[i][j] = G.edges[i][j];
+			Path[i][j] = -1;
+		}
+	}
+	for (k = 0;k<G.n;k++){
+		for(i = 0;i<G.n;i++){
+			for(j = 0;j<G.n;j++){
+				if(A[i][j]>A[i][k]+A[k][j]){
+				
+					A[i][j]=A[i][k]+A[k][j];
+					Path[i][j] = k;
+				}
+			}
+		}
+	}
+}
+```
+时间复杂度:O(n^3)
+[Floyd算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Floyd.html)
