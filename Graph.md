@@ -294,7 +294,7 @@ void Dijkstra(Mgraph G,int S,int dist[],int path[]){
 O(n^2)
 
 [Dijkstra算法可视化](http://www.cs.usfca.edu/%7Egalles/visualization/Dijkstra.html)
-### 1.迪杰斯特拉算法
+### 1.弗洛伊德算法
 执行过程:
 ```python
 Floyd(G):
